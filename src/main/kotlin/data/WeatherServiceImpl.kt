@@ -22,12 +22,6 @@ class WeatherServiceImpl(private val client: HttpClient, private val attributes:
             Notification("warning", "This is test content6", "2023/10/19"))
     }
 
-    override suspend fun getLocation(): LocationFromIP =
-        tryToExecute<LocationFromIP>(APIS.LOCATION_API) { get("check") }
-
-    override suspend fun searchWeatherByCityName(city: String): List<SearchItem> =
-        tryToExecute<List<SearchItem>>(APIS.WEATHER_API) { get("search.json") { parameter("q", city) } }
-
     private suspend inline fun <reified T> tryToExecute(
         api: APIS,
         method: HttpClient.() -> HttpResponse

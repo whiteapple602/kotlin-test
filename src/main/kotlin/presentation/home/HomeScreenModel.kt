@@ -2,8 +2,6 @@ package presentation.home
 
 import data.WeatherService
 import data.dto.Notification
-import data.dto.SearchItem
-import data.dto.Weather
 import kotlinx.coroutines.Job
 import presentation.base.BaseScreenModel
 import presentation.base.ErrorState
@@ -32,40 +30,6 @@ class HomeScreenModel(private val service: WeatherService) : BaseScreenModel<Hom
 
     override fun onSearchExpand(state: Boolean) {
         updateState { it.copy(isSearchExpanded = state) }
-    }
-
-    private fun onSearchSuccess(searchItems: List<SearchItem>) {
-        val cities = searchItems.mapNotNull { it.name }
-        updateState {
-            it.copy(
-                isSearchExpanded = true,
-                suggestion = cities,
-                isExpandMenuSuggestion = cities.isNotEmpty()
-            )
-        }
-    }
-
-    override fun onSearchTermChanged(term: String) {
-        updateState { it.copy(keyword = term) }
-        launchSearchJob()
-    }
-
-    override fun search() {
-        tryToExecute(
-            {
-                if (state.value.keyword.isNotBlank())
-                    service.searchWeatherByCityName(state.value.keyword)
-                else
-                    emptyList()
-            },
-            onSuccess = ::onSearchSuccess,
-            onError = ::onError
-        )
-    }
-
-    private fun launchSearchJob() {
-        searchJob?.cancel()
-        searchJob = launchDelayed(300L) { search() }
     }
 
     override fun onDropDownMenuExpand(expand: Boolean) {
