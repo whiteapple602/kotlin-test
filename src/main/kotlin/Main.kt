@@ -1,40 +1,48 @@
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
+// Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.SlideTransition
+import di.appModules
+import org.koin.core.context.startKoin
+import presentation.home.HomeScreen
+import presentation.theme.LightColor
+import presentation.theme.WeatherTypography
+import java.awt.Dimension
 
-fun main() = application {
-    Window(
-        onCloseRequest = ::exitApplication,
-        title = "Compose for Desktop",
-        state = rememberWindowState(width = 300.dp, height = 300.dp)
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+@Preview
+fun App() {
+    MaterialTheme(
+        colors = LightColor,
+        typography = WeatherTypography
     ) {
-        val count = remember { mutableStateOf(0) }
-        MaterialTheme {
-            Column(Modifier.fillMaxSize(), Arrangement.spacedBy(5.dp)) {
-                Button(modifier = Modifier.align(Alignment.CenterHorizontally),
-                    onClick = {
-                        count.value++
-                    }) {
-                    Text(if (count.value == 0) "Hello World" else "Clicked ${count.value}!")
-                }
-                Button(modifier = Modifier.align(Alignment.CenterHorizontally),
-                    onClick = {
-                        count.value = 0
-                    }) {
-                    Text("Reset")
-                }
+        Surface(color = MaterialTheme.colors.background) {
+            Navigator(HomeScreen) {
+                SlideTransition(it)
             }
+        }
+    }
+}
+
+fun main() {
+    startKoin { modules(appModules()) }
+    application {
+        val windowState = rememberWindowState()
+        Window(
+            onCloseRequest = ::exitApplication,
+            state = windowState,
+            title = "Notification Application"
+        ) {
+            this.window.minimumSize = Dimension(800, 400)
+            App()
         }
     }
 }
