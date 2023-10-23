@@ -24,6 +24,10 @@ class HomeScreenModel(private val service: WeatherService) : BaseScreenModel<Hom
         )
     }
 
+    override fun clearData() {
+        updateState { it.copy(notificationUIState = listOf()) }
+    }
+
     private fun onGetNotificationSuccess(notifications: List<Notification>) {
         updateState { it.copy(notificationUIState = notifications, isLoading = false, error = null) }
     }

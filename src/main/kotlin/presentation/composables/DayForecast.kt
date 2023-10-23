@@ -26,29 +26,17 @@ fun DayForecast(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-//        WeatherImageLoader(
-//            modifier = Modifier.padding(end = 18.dp).size(28.dp),
-//            url = state.iconUrl
-//        )
-//
-//        Text(
-//            text = buildAnnotatedString {
-//                withStyle(maxTemperatureSpanStyle) { append(state.minTemperature + "°") }
-//                withStyle(minTemperatureSpanStyle) { append("/" + state.minTemperature + "°") }
-//            },
-//            modifier = Modifier.width(128.dp),
-//        )
 
         Text(
             text = state.content,
-            style = MaterialTheme.typography.body2.copy(),
-            modifier = Modifier.padding(end = 48.dp).width(48.dp),
+            style = MaterialTheme.typography.body1.copy(),
+            modifier = Modifier.padding(end = 48.dp).width(148.dp),
         )
 
         Text(
             text = state.date,
             maxLines = 1,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.body2,
         )
 
     }

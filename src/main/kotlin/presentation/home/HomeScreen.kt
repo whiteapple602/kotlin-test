@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -90,13 +92,27 @@ object HomeScreen : BaseScreen<HomeScreenModel, HomeUiEffect, HomeUIState, HomeI
                         }
                     ) {
                         Column(
-                            modifier = Modifier.height(344.dp).width(374.dp)
+                            modifier = Modifier.height(400.dp).width(400.dp)
                         ) {
-                            Text(
-                                text = "Notifications",
-                                style = MaterialTheme.typography.h2,
-                                modifier = Modifier.padding(16.dp)
-                            )
+                            Row (
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = modifier
+                            ){
+                                Text(
+                                    text = "Notifications",
+                                    style = MaterialTheme.typography.h2,
+                                    modifier = Modifier.padding(16.dp)
+                                )
+
+                                Button(
+                                    modifier = Modifier.padding(start = 60.dp),
+                                    onClick = listener::clearData,
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = MaterialTheme.colors.secondary
+                                    )) {
+                                    Text("Clear")
+                                }
+                            }
 
                             val scrollState = rememberLazyListState()
                             val coroutineScope = rememberCoroutineScope()

@@ -10,6 +10,8 @@ interface HomeInteractionListener : BaseInteractionListener {
 
     fun getData()
 
+    fun clearData()
+
     fun onSearchExpand(state: Boolean)
 
 }

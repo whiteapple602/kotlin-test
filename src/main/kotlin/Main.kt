@@ -41,7 +41,7 @@ fun main() {
             state = windowState,
             title = "Notification Application"
         ) {
-            this.window.minimumSize = Dimension(800, 400)
+            this.window.minimumSize = Dimension(500, 400)
             App()
         }
     }
